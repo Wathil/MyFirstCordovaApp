@@ -47,6 +47,7 @@ var app = new function () {
   // Afficher le pays
   this.fetchAll = function () {
     var data = "";
+    this.count(this.countries.length);
     if (this.countries.length > 0) {
       for (var i = 0; i < this.countries.length; i++) {
         data += "<tr>";
@@ -108,8 +109,15 @@ var app = new function () {
   }
 
   // Compte le nombre d'élément du tableau
-  this.count = function (data) {
-    
+  this.count = function(data) {
+    var el = document.getElementById("counter");
+    var name = "country";
+    if (data > 0) {
+      el.innerHTML = data + " countries";
+    }
+    else {
+      el.innerHTML = "No countries";
+    }
   }
 }
 
