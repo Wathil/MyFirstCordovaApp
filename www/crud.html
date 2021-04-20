@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!--
+            Customize this policy to fit your own app's needs. For more guidance, see:
+                https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+            Some notes:
+                * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+                * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+                * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                    * Enable inline JS: add 'unsafe-inline' to default-src
+            -->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <meta name="color-scheme" content="light dark">
+        <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="css/materialize.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <title>Hello World</title>
+    </head>
+    
+    <body>
+    
+        <nav>
+            <div class="nav-wrapper teal darken-2">
+                <a href="#!" class="brand-logo center"><img src="img/android.png" width="32px"></a>
+                <a href="#" data-target="mobile-demo" class="lime-text text-lighten-3 sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a class="lime-text text-lighten-3" href="index.html">Home</a></li>
+                    <li><a class="lime-text text-lighten-3" href="crud.html">Fake CRUD</a></li>
+                </ul>
+            </div>
+        </nav>
+    
+        <ul class="sidenav teal darken-2" id="mobile-demo">
+            <li><a class="lime-text text-lighten-3" href="index.html">Home</a></li>
+            <li><a class="lime-text text-lighten-3" href="crud.html">Fake CRUD</a></li>
+        </ul>
+    
+        <div>
+            <h4 class="white-text">Fake CRUD</h4>
+            <br>
+            <form action="javascript:void(0)" method="post" onSubmit="app.add()">
+                <input type="text" id="add-name" placeholder="Nouveau pays">
+                <input type="submit" value="Ajouter">
+            </form>
+
+            <div id="spoiler" role="aria-hidden" hidden>
+                <form action="javascript:void(0)" method="post" id="save-edit">
+                    <input type="text" id="edit-name">
+                    <input type="submit" value="Edit">
+                    <a onclick="closeInput()" aria-label="Close">&#10006;</a>
+                </form>
+            </div>
+
+            <table>
+                <tr>
+                    <th class="white-text">Nom</th>
+                </tr>
+                <tbody id="countries"></tbody>
+            </table>
+        </div>
+    
+        <footer class="page-footer teal darken-2">
+            <div class="container">
+              <div class="row">
+                <div class="col l6 s12">
+                  <h5 class="white-text">Footer Content</h5>
+                  <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                  <h5 class="white-text">Links</h5>
+                  <ul>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="footer-copyright">
+              <div class="container">
+              © 2014 Copyright Text
+              <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+              </div>
+            </div>
+          </footer>
+    
+        <script src="cordova.js"></script>
+        <script src="js/jquery-3.6.0.js"></script>
+        <script src="js/materialize.js"></script>
+        <script src="js/index.js"></script>
+    </body>
+
+</html>
