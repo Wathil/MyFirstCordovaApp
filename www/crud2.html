@@ -91,6 +91,7 @@
                 });
             },
             showPersonDetail: function (id) { 
+                console.log("showPersonDetail id=" + id);
                 if (id == null) return;
                 $('#personSearchPanel').hide();
                 $.ajax({
@@ -101,9 +102,9 @@
                     success: function (person) {
                         console.log(person);
                         $('#personDetailPanel').show();
-                        $('#id').attr('value', person.id);
-                        $('#nom').attr('value', person.nom).focus();
-                        $('#prenom').attr('value', person.prenom);
+                        $('#id').val(person.id);
+                        $('#nom').val(person.nom);
+                        $('#prenom').val(person.prenom);
                     }
                 });
             },
@@ -146,6 +147,7 @@
                             alert(result.error[0].message);
                         } else {
                             if (requestType == "POST") alert('ID de la nouvelle entrée :' + result.id);
+
                             personManager.refreshSearch();
                         }
                     }
@@ -156,7 +158,6 @@
                 $.ajax({
                     url: "http://localhost:5557/personnes/" + $('#id').val(), // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
                     type: 'DELETE', // Le type de la requête HTTP,
-                    data: $('#id').attr('value'),
                     cache: false, // n'enregistre pas temporairement des copies de données
                     dataType : 'json', //  Le type de données à recevoir, ici, du json
                     success: function (result) {
