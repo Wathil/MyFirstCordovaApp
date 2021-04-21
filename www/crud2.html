@@ -1,88 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CRUD 2</title>
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/materialize.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 </head>
+
 <body>
-    <nav style="position: fixed; width: 100%;z-index:99">
-        <div class="nav-wrapper">
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">apps</i></a>
-            <!-- <ul class="right hide-on-med-and-down">
-                <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li>
-                <li><a href="collapsible.html">Javascript</a></li>
-                <li><a href="mobile.html">Mobile</a></li>
-            </ul> -->
+
+    <nav>
+        <div class="nav-wrapper teal darken-2">
+            <a href="index.html" class="brand-logo center"><img src="img/android.png" width="32px"></a>
+            <a href="#" data-target="mobile-demo" class="lime-text text-lighten-3 sidenav-trigger"><i
+                    class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a class="lime-text text-lighten-3" href="index.html">Home</a></li>
+                <li><a class="lime-text text-lighten-3" href="crud.html">Fake CRUD</a></li>
+                <li><a class="lime-text text-lighten-3" href="crud2.html">Fake CRUD 2</a></li>
+                <li><a class="lime-text text-lighten-3" href="mobile.html">Mobile</a></li>
+            </ul>
         </div>
     </nav>
-    <ul class="sidenav" id="mobile-demo">
-        <div style="background-color: white;height:15px"></div>
-        <li><a style="display: inline;" href="index.html"><i class="material-icons">account_balance_wallet</i>Home</a>
-        </li>
-        <li><a style="display: inline;" href="crud.html"><i class="material-icons">all_out</i>Fake Crud JS</a></li>
-        <li><a style="display: inline;" href="crud2.html"><i class="material-icons">all_out</i>Crud API JQuery</a></li>
-        <li><a style="display: inline;" href="infoMobile.html"><i class="material-icons">ac_unit</i>Informations</a></li>
-        <div class="page-footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col l6 s12">
-                        <h5 class="white-text">Présentation</h5>
-                        <p class="grey-text text-lighten-4">Apache Cordova est un framework de développement mobile open-source.</p>
-                        <p class="grey-text text-lighten-4">Il permet d'exploiter les technologies Web courantes telles que HTML5, 
-                            CSS3 et JavaScript pour développer des applications multi-plateformes, évitant ainsi l'utilisation 
-                            des langages natifs propres aux différentes plates-formes mobiles.</p>
-                    </div>
-                </div>
+
+    <ul class="sidenav teal darken-2" id="mobile-demo">
+        <li><a class="lime-text text-lighten-3" href="index.html">Home</a></li>
+        <li><a class="lime-text text-lighten-3" href="crud.html">Fake CRUD</a></li>
+        <li><a class="lime-text text-lighten-3" href="crud2.html">Fake CRUD 2</a></li>
+        <li><a class="lime-text text-lighten-3" href="mobile.html">Mobile</a></li>
+    </ul>
+
+    <div class="container">
+        <div id="personSearchPanel">
+            <h4 class="white-text">CRUD 2</h4>
+            <button id="findButton">Afficher</button>
+            <button id="newButton">Ajouter</button>
+            <br>
+            <div id="personListPanel">
+                <ul id="personList"></ul>
             </div>
         </div>
-    </ul>
-    <div style="padding: 10px">
-        <h3>CRUD</h3>
-        <form action="javascript:void(0);" method="post" onsubmit="app.add()">
-            <input class="validate" type="text" id="add-name" placeholder="New country">
-            <input type="submit" class="btn waves-effect waves-light" value="Add">
-        </form>
-        <div id="spoiler" role="aria-hidden" hidden>
-            <form action="javascript:void(0);" method="POST" id="save-edit">
-                <input class="validate" type="text" id="edit-name">
-                <input class="btn waves-effect waves-light" type="submit" value="Edit" />
-                <a onclick="closeInput()" aria-label="Close">&#10006;</a>
-            </form>
+        <div id="personDetailPanel">
+            <h5 class="white-text">Edit</h5>
+            <input type="hidden" id="id">
+            <br>
+            <input type="text" id="nom">
+            <br>
+            <input type="text" id="prenom">
+            <br>
+            <div>
+                <button id="backToSearch">Retour</button>
+                <button id="save">Enregistrer</button>
+                <button id="delete">Supprimer</button>
+            </div>
         </div>
-        <br>
-        <p id="counter"></p>
-        <br>
-        <table>
-            <tr>
-                <th>Name</th>
-            </tr>
-            <tbody id="countries">
-            </tbody>
-        </table>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <footer class="page-footer" style="position: fixed; width: 100%;z-index:99;margin-top:20px">      
-            <div class="col s12">
-              <ul class="tabs">
-                <li class="tab col s3"><a href="#test1"><i class="material-icons">dashboard</i></a></li>
-                <li class="tab col s3"><a class="active" href="#test2"><i class="material-icons">description</i></a></li>
-                <li class="tab col s3 "><a href="#test3"><i class="material-icons">developer_board</i></a></li>
-                <li class="tab col s3"><a href="#test4"><i class="material-icons">person</i></a></li>
-              </ul>
-            </div>          
-    </footer>
+
     <script src="cordova.js"></script>
     <script src="js/jquery-3.6.0.js"></script>
     <script src="js/materialize.js"></script>
-    <script src="js/index.js"></script>
+    <!-- <script src="js/index.js"></script> -->
+
+    <script>
+        var personManager = {
+            showPersonList: function () {
+                $.ajax({
+                    url: "http://localhost:5557/personnes/", // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    type: "GET", // Le type de la requête HTTP,
+                    cache: false, // n'enregistre pas temporairement des copies de données
+                    dataType : 'json', //  Le type de données à recevoir, ici, du json
+                    success: function (data) {
+                        console.log(data);
+                        $('#personList li').remove();
+                        $.each(data, function(index, personne) {
+                            $("<li class=\"white-text\">")
+                                .text(personne.nom + ' / ' + personne.prenom)
+                                .attr('value', personne.id).appendTo($('#personList'));
+                        });
+                        $('#personListPanel').show();
+                    }
+                });
+            },
+            showPersonDetails: function () { },
+            savePerson: function () { },
+            deletePerson: function () { }
+        };
+
+        $(document).ready(function () {
+            $('#findButton').click(function (e) {
+                e.preventDefault();
+                personManager.showPersonList();
+            });
+            $('.sidenav').sidenav();
+        })
+    </script>
+
+    <footer class="page-footer teal darken-2" style="position: fixed; width: 100%;z-index:99;margin-top:20px">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a href="#test1"><i
+                            class="material-icons teal-text text-darken-4">dashboard</i></a></li>
+                <li class="tab col s3"><a class="active" href="#test2"><i
+                            class="material-icons teal-text text-darken-4">description</i></a>
+                </li>
+                <li class="tab col s3 "><a href="#test3"><i
+                            class="material-icons teal-text text-darken-4">developer_board</i></a></li>
+                <li class="tab col s3"><a href="#test4"><i class="material-icons teal-text text-darken-4">person</i></a>
+                </li>
+            </ul>
+        </div>
+    </footer>
 </body>
+
 </html>
