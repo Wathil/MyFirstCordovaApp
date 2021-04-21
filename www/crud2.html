@@ -35,22 +35,26 @@
     </ul>
 
     <div class="container">
+
         <div id="personSearchPanel">
             <h4 class="white-text">CRUD 2</h4>
             <button id="findButton">Afficher</button>
             <button id="newButton">Ajouter</button>
             <br>
+
             <div id="personListPanel">
                 <ul id="personList"></ul>
             </div>
+
         </div>
-        <div id="personDetailPanel">
+
+        <div id="personDetailPanel" hidden>
             <h5 class="white-text">Edit</h5>
             <input type="hidden" id="id">
             <br>
-            <input type="text" id="nom">
+            <input class="white-text" type="text" id="nom">
             <br>
-            <input type="text" id="prenom">
+            <input class="white-text" type="text" id="prenom">
             <br>
             <div>
                 <button id="backToSearch">Retour</button>
@@ -79,21 +83,118 @@
                         $.each(data, function(index, personne) {
                             $("<li class=\"white-text\">")
                                 .text(personne.nom + ' / ' + personne.prenom)
-                                .attr('value', personne.id).appendTo($('#personList'));
+                                .attr('value', personne.id).appendTo($('#personList'))
+                                .append("<button onclick=\"personManager.showPersonDetail(\'" + personne.id + "\');\" >Edit</button>");
                         });
                         $('#personListPanel').show();
                     }
                 });
             },
-            showPersonDetails: function () { },
-            savePerson: function () { },
-            deletePerson: function () { }
+            showPersonDetail: function (id) { 
+                if (id == null) return;
+                $('#personSearchPanel').hide();
+                $.ajax({
+                    url: "http://localhost:5557/personnes/" + id, // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    type: "GET", // Le type de la requête HTTP,
+                    cache: false, // n'enregistre pas temporairement des copies de données
+                    dataType : 'json', //  Le type de données à recevoir, ici, du json
+                    success: function (person) {
+                        console.log(person);
+                        $('#personDetailPanel').show();
+                        $('#id').attr('value', person.id);
+                        $('#nom').attr('value', person.nom).focus();
+                        $('#prenom').attr('value', person.prenom);
+                    }
+                });
+            },
+            backToSearch: function() {
+                console.log("back to search");
+                $('#personDetailPanel').hide();
+                $('#personSearchPanel').show();
+                $('#personListPanel').show();
+                //$('#personList').focus();
+            },
+            collectFieldsValues: function() {
+                return {
+                    id: $('#id').val(),
+                    nom: $('#nom').val(),
+                    prenom: $('#prenom').val()
+                };
+            },
+            refreshSearch: function() {
+                this.backToSearch();
+                this.showPersonList();
+            },
+            newPerson: function() {
+                $('#personSearchPanel').hide();
+                $('#personDetailPanel').show();
+                $('#id').attr('value', null);
+                $('#nom').attr('value', 'New person').focus().select();
+                $('#prenom').attr('value', 'New person');
+            },
+            savePerson: function () {
+                if (!confirm('Save ?')) return;
+                var requestType = $('#id').val() != '' ? 'PUT' : 'POST';
+                $.ajax({
+                    url: "http://localhost:5557/personnes/" + $('#id').val(), // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    type: requestType, // Le type de la requête HTTP,
+                    data: personManager.collectFieldsValues(),
+                    cache: false, // n'enregistre pas temporairement des copies de données
+                    dataType : 'json', //  Le type de données à recevoir, ici, du json
+                    success: function (result) {
+                        if (result.error) {
+                            alert(result.error[0].message);
+                        } else {
+                            if (requestType == "POST") alert('ID de la nouvelle entrée :' + result.id);
+                            personManager.refreshSearch();
+                        }
+                    }
+                });
+            },
+            deletePerson: function () {
+                if (!confirm('Delete ?')) return;
+                $.ajax({
+                    url: "http://localhost:5557/personnes/" + $('#id').val(), // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    type: 'DELETE', // Le type de la requête HTTP,
+                    data: $('#id').attr('value'),
+                    cache: false, // n'enregistre pas temporairement des copies de données
+                    dataType : 'json', //  Le type de données à recevoir, ici, du json
+                    success: function (result) {
+                        if (result.error) {
+                            alert(result.error[0].message);
+                        } else {
+                            personManager.refreshSearch();
+                        }
+                    }
+                });
+            }
         };
 
         $(document).ready(function () {
+            $('#personListPanel #personDetailPanel').hide();
             $('#findButton').click(function (e) {
                 e.preventDefault();
                 personManager.showPersonList();
+            });
+            // $('#showDetailButton').click(function (e) {
+            //     e.preventDefault();
+            //     personManager.showPersonDetail($('#personList').val());
+            // });
+            $('#backToSearch').click(function (e) {
+                e.preventDefault();
+                personManager.backToSearch();
+            });
+            $('#newButton').click(function (e) {
+                e.preventDefault();
+                personManager.newPerson();
+            });
+            $('#save').click(function (e) {
+                e.preventDefault();
+                personManager.savePerson();
+            });
+            $('#delete').click(function (e) {
+                e.preventDefault();
+                personManager.deletePerson();
             });
             $('.sidenav').sidenav();
         })
