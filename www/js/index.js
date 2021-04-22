@@ -23,9 +23,23 @@ document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
   // Cordova is now initialized. Have fun!
-
   console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
   document.getElementById('deviceready').classList.add('ready');
+  document.getElementById("cameraTakePicture").addEventListener("click", cameraTakePicture);
+}
+
+function cameraTakePicture() {
+  navigator.camera.getPicture(onSuccess, onFail, {
+    quality: 50,
+    destinationType: Camera.DestinationType.DATA_URL
+  });
+  function onSuccess(imageData) {
+    var image = document.getElementById('myImage');
+    image.src = "data:image/jpeg;base64," + imageData;
+  }
+  function onFail(message) {
+    alert('Failed because: ' + message);
+  }
 }
 
 // document.addEventListener('DOMContentLoaded', function() {
@@ -52,8 +66,8 @@ var app = new function () {
       for (var i = 0; i < this.countries.length; i++) {
         data += "<tr>";
         data += "<td class=\"white-text\">" + this.countries[i] + "</td>";
-        data += '<td><button onclick="app.edit('+ i +')">Edit</button>';
-        data += '&nbsp;<button onclick="app.delete('+ i +')">Delete</button></td>';
+        data += '<td><button onclick="app.edit(' + i + ')">Edit</button>';
+        data += '&nbsp;<button onclick="app.delete(' + i + ')">Delete</button></td>';
         data += '</tr>';
       };
       return this.el.innerHTML = data;
@@ -109,7 +123,7 @@ var app = new function () {
   }
 
   // Compte le nombre d'élément du tableau
-  this.count = function(data) {
+  this.count = function (data) {
     var el = document.getElementById("counter");
     var name = "country";
     if (data > 0) {
