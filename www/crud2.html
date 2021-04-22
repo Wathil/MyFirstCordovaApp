@@ -73,7 +73,8 @@
         var personManager = {
             showPersonList: function () {
                 $.ajax({
-                    url: "http://localhost:5557/personnes/", // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    //url: "http://localhost:5557/personnes/", // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    url: "https://server-rest-api.herokuapp.com/personnes/",
                     type: "GET", // Le type de la requête HTTP,
                     cache: false, // n'enregistre pas temporairement des copies de données
                     dataType : 'json', //  Le type de données à recevoir, ici, du json
@@ -95,7 +96,8 @@
                 if (id == null) return;
                 $('#personSearchPanel').hide();
                 $.ajax({
-                    url: "http://localhost:5557/personnes/" + id, // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    //url: "http://localhost:5557/personnes/" + id, // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    url: "https://server-rest-api.herokuapp.com/personnes/" + id,
                     type: "GET", // Le type de la requête HTTP,
                     cache: false, // n'enregistre pas temporairement des copies de données
                     dataType : 'json', //  Le type de données à recevoir, ici, du json
@@ -137,7 +139,8 @@
                 if (!confirm('Save ?')) return;
                 var requestType = $('#id').val() != '' ? 'PUT' : 'POST';
                 $.ajax({
-                    url: "http://localhost:5557/personnes/" + $('#id').val(), // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    //url: "http://localhost:5557/personnes/" + $('#id').val(), // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    url: "https://server-rest-api.herokuapp.com/personnes/" + $('#id').val(),
                     type: requestType, // Le type de la requête HTTP,
                     data: personManager.collectFieldsValues(),
                     cache: false, // n'enregistre pas temporairement des copies de données
@@ -156,7 +159,8 @@
             deletePerson: function () {
                 if (!confirm('Delete ?')) return;
                 $.ajax({
-                    url: "http://localhost:5557/personnes/" + $('#id').val(), // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    //url: "http://localhost:5557/personnes/" + $('#id').val(), // La ressource ciblée, pour Android utiliser http://10.0.2.2:5556/personnes/
+                    url: "https://server-rest-api.herokuapp.com/personnes/" + $('#id').val(),
                     type: 'DELETE', // Le type de la requête HTTP,
                     cache: false, // n'enregistre pas temporairement des copies de données
                     dataType : 'json', //  Le type de données à recevoir, ici, du json
